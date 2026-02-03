@@ -62,11 +62,12 @@ app.patch('/api/notes/:id', async (req, res) => {
 });
 
 /* SPA fallback — VERY IMPORTANT */
-app.get('/:path(*)', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(
     path.join(__dirname, '../public/index.html')
   );
 });
+
 
 
 module.exports = app;
