@@ -1,0 +1,27 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/devMayank1005/BACKEND-#readme",
+  "bugs": {
+    "url": "https://github.com/devMayank1005/BACKEND-/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devMayank1005/BACKEND-.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.4",
+    "jsonwebtoken": "^9.0.3",
+    "moongose": "^1.0.0",
+    "node": "^25.6.0"
+  }
+}
