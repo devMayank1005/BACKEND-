@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/user.model');
-const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 async function registerController(req, res) {
     try {
         const { name, email, username, password} = req.body;
@@ -20,11 +20,7 @@ async function registerController(req, res) {
         }
 
         // Hash incoming password
-        const hashedPassword = crypto
-            .createHash('sha256')
-            .update(password)
-            .digest('hex'); 
-
+        const hashedPassword = await bcrypt.hash(password, 10);
         // Create new user
         const user = await UserModel.create({
             name,
@@ -58,17 +54,10 @@ async function registerController(req, res) {
     }
 };
 
-async function loginController (req, res)  {
+async function loginController(req, res) {
     try {
         const { email, username, password } = req.body;
 
-        // Hash incoming password
-        const hashedPassword = crypto
-            .createHash('sha256')
-            .update(password)
-            .digest('hex');
-
-        // Find user by email OR username
         const user = await UserModel.findOne({
             $or: [
                 { email },
@@ -76,13 +65,20 @@ async function loginController (req, res)  {
             ]
         });
 
-        if (!user || user.password !== hashedPassword) {
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
             return res.status(401).json({
                 message: "Invalid credentials"
             });
         }
 
-        // Generate JWT
         const token = jwt.sign(
             { userId: user._id },
             process.env.JWT_SECRET_KEY,
@@ -96,8 +92,6 @@ async function loginController (req, res)  {
                 username: user.username,
             },
             token
-            
-            
         });
 
     } catch (error) {
@@ -106,6 +100,6 @@ async function loginController (req, res)  {
             error: error.message
         });
     }
-};
+}
 
 module.exports = { registerController, loginController };
