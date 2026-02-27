@@ -33,8 +33,11 @@ async function registerController(req, res) {
 
         // Create JWT
         const token = jwt.sign(
-            { userId: user._id },
+            { userId: user._id ,
+                username: user.username
+            },
             process.env.JWT_SECRET_KEY,
+            
             { expiresIn: "1d" }
         );
 
@@ -90,7 +93,8 @@ async function loginController(req, res) {
         }
 
         const token = jwt.sign(
-            { userId: user._id },
+            { userId: user._id,
+                username: user.username},
             process.env.JWT_SECRET_KEY,
             { expiresIn: "1d" }
         );
