@@ -61,14 +61,39 @@ if (!isFolloweeExist) {
   }
 }
 
-module.exports = { followUserController };
 
 
+async function unfollowUserController(req, res) {
+  try {
+    const followerUsername = req.user.username; // from token
+    const followeeUsername = req.params.username; // from URL
 
+    const isUserFollowing = await FollowModel.findOne({
+      follower: followerUsername,
+      followee: followeeUsername
+    });
 
+    if (!isUserFollowing) {
+      return res.status(400).json({
+        message: `You are not following ${followeeUsername}`
+      });
+    }
 
+    await FollowModel.deleteOne({
+      follower: followerUsername,
+      followee: followeeUsername
+    });
 
+    res.status(200).json({
+      message: `You have unfollowed ${followeeUsername}`
+    });
 
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+}   
 
-
-module.exports = {followUserController}
+ 
+module.exports = { followUserController, unfollowUserController };

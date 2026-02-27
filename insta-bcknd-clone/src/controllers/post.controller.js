@@ -3,7 +3,7 @@ const  ImageKit = require('@imagekit/nodejs/index.js');
 const { toFile } = require("@imagekit/nodejs/index.js");
 const jwt = require("jsonwebtoken");
 const { identifyUser } = require("../middleware/auth.middileware");
-
+const likeModel = require("../models/like.model");
 
 const imagekitInstance = new ImageKit({
     privateKey : process.env.IMAGEKIT_PRIVATE_KEY
@@ -49,7 +49,6 @@ async function getPostController(req,res){ // /api/posts this is a protected rou
 }
 
 
-
 async function getPostdeailsController(req,res){ // /api/posts/details/:postId this is a protected route, only logged in users can access this route. So we need to verify the token and get the user id from the token and then get the post details of that post id. return details about the post and also return a boolean value isOwner which will be true if the logged in user is the owner of the post and false if the logged in user is not the owner of the post.
   
     const userId = req.user.userId;
@@ -78,8 +77,50 @@ async function getPostdeailsController(req,res){ // /api/posts/details/:postId t
     });
 }
 
+async function likePostController(req, res) {
+    try {
+        const username = req.user.username;
+        const postId = req.params.postId;
+
+        const post = await PostModel.findById(postId);
+        if (!post) {
+            return res.status(404).json({
+                message: "Post not found"
+            });
+        }
+
+        // Check if already liked
+        const existingLike = await likeModel.findOne({
+            username,
+            postId
+        });
+
+        if (existingLike) {
+            return res.status(400).json({
+                message: "You have already liked this post"
+            });
+        }
+
+        // Create like
+        await likeModel.create({
+            username,
+            postId
+        });
+
+        return res.status(200).json({
+            message: "Post liked successfully"
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+}
+
 module.exports = {
     createPostController
     ,getPostController,
-    getPostdeailsController
+    getPostdeailsController,
+    likePostController
 };
