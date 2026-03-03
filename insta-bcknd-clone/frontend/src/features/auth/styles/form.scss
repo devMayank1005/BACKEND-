@@ -1,0 +1,40 @@
+ main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.form-container{
+   height : fit-content;
+   min-width: 300px;
+
+   form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);   
+
+    input, button{
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+    }
+    button{
+      background-color: red;
+      color: white;
+    }
+   }
+     .toogleAuthForm{
+        text-align: center;
+        margin-top: 10px;
+        color: #555;
+        cursor: pointer;
+     }
+  }
