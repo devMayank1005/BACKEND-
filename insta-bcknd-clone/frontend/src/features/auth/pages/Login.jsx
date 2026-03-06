@@ -1,42 +1,68 @@
-import React from 'react'
-import  '../styles/form.scss'
-import { Link } from 'react-router'
-import axios from 'axios'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import '../styles/form.scss'
+import { Link, useNavigate } from 'react-router-dom'
+import { login } from '../services/auth.api'
+
 const Login = () => {
 
-  const  [username, setUsername] = useState('')
-  const  [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const navigate = useNavigate()
 
   async function handleSubmit(e){
     e.preventDefault()
+
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/login',{
-        username,
-        password
-      },{
-        withCredentials: true
-        
-      })
-      console.log(res.data)
+
+      const res = await login(username, password)
+
+      if(!res) return
+
+      console.log("Login success", res)
+
+      // redirect to home page
+      navigate('/')
+
     } catch (error) {
-      console.log(error)
+
+      console.log(error.response?.data?.message)
+
     }
   }
+
   return (
     <main>
       <div className='container'>
         <h1>Login</h1>
-        <form>
-            <input
-            onInput={(e)=>setUsername(e.target.value)}
-             type='text' placeholder='Username' />
-            <input 
-            onInput={(e)=>setPassword(e.target.value)} 
-            type='password' placeholder='Password' />
+
+        <form onSubmit={handleSubmit}>
+
+          <input
+            type='text'
+            placeholder='Username'
+            value={username}
+            onChange={(e)=>setUsername(e.target.value)}
+          />
+
+          <input
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
+          />
+
           <button type='submit'>Login</button>
+
         </form>
-        <p>Don't have an account? <Link className='toogleAuthForm' to="/register">Register</Link></p>
+
+        <p>
+          Don't have an account?
+          <Link className='toggleAuthForm' to="/register">
+            Register
+          </Link>
+        </p>
+
       </div>
     </main>
   )

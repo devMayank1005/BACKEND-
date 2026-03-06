@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.model");
+const { profile } = require("node:console");
 
 /* =========================
    REGISTER CONTROLLER
@@ -147,8 +148,33 @@ async function logoutController(req, res) {
     }
 }
 
+async function getMeController(req, res) {
+    try {
+        const user = await UserModel.findById(req.user.userId)
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+        res.status(200).json({
+            user: {
+                id: user._id,
+                email: user.email,
+                username: user.username,
+                profilePicture: user.profilePicture
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching user data",
+            error: error.message
+        });
+    }
+}
+
 module.exports = {
     registerController,
     loginController,
-    logoutController
+    logoutController,
+    getMeController
 };
