@@ -1,6 +1,5 @@
 import { createContext,useState,useEffect} from "react";
-import {login,register,logout} from './services/auth.api'
-
+import { login, register, logout, getMe as getMeApi } from './services/auth.api' 
 export const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
@@ -20,12 +19,28 @@ export const AuthProvider = ({children}) => {
         setUser(null)
     }
 
+    const getMe = async () => {
+        try {
+            const res = await getMe()
+            setUser(res.user)
+        } catch (error) {
+            setUser(null)
+        }
+        finally{
+            setLoading(false)
+        }
+    }
+
+    useEffect(()=>{
+        getMe()
+    },[])   
+
  
 
 
 
     return (
-        <AuthContext.Provider value={{user,loading,handleLogin,handleRegister,handleLogout}}>
+        <AuthContext.Provider value={{user,loading,handleLogin,handleRegister,handleLogout,getMe}}>
             {children}
         </AuthContext.Provider>
     )       

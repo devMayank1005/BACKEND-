@@ -50,3 +50,13 @@ export async function logout() {
     console.log(error)
   }
 }
+
+export async function getMe() {      
+
+  try {
+    const res = await api.get('/me')
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}  
