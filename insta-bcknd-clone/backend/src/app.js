@@ -25,10 +25,12 @@ const postRouter = require('./routes/post.route');
 const userRouter = require('./routes/user.route');
 
 
+
 // use routes
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/users', userRouter);
+
 
 
 

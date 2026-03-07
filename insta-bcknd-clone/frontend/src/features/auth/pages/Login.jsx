@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../styles/form.scss'
 import { Link, useNavigate } from 'react-router-dom'
-import { login } from '../services/auth.api'
+import { login } from '../../auth/services/auth.api'
 
 const Login = () => {
 

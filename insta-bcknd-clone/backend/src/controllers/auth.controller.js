@@ -77,7 +77,7 @@ async function loginController(req, res) {
 
         const user = await UserModel.findOne({
             $or: [{ email }, { username }]
-        });
+        }).select('+password'); // Include password field for authentication
 
         if (!user) {
             return res.status(404).json({
@@ -112,7 +112,11 @@ async function loginController(req, res) {
             user: {
                 id: user._id,
                 email: user.email,
-                username: user.username
+                username: user.username,
+                profilePicture: user.profilePicture,
+                bio: user.bio
+
+
             }
         });
 

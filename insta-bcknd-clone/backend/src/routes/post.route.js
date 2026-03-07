@@ -1,7 +1,7 @@
 express = require("express");
 const postRouter = express.Router();
 const { createPostController, getPostController, getPostdeailsController
-, likePostController
+, likePostController, getFeedcontroller
  } = require("../controllers/post.controller");
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
@@ -15,9 +15,11 @@ postRouter.get('/',identifyUser,getPostController);
 
 postRouter.get('/details/:postId',identifyUser,getPostdeailsController); // get post details by post id, this is a protected route, only logged in users can access this route. So we need to verify the token and get the user id from the token and then get the post details of that post id.)
 
- postRouter.post('/like/:postId',identifyUser,likePostController); // like a post by post id, this is a protected route, only logged in users can access this route. So we need to verify the token and get the user id from the token and then like the post with that post id.)
+postRouter.post('/like/:postId',identifyUser,likePostController); // like a post by post id, this is a protected route, only logged in users can access this route. So we need to verify the token and get the user id from the token and then like the post with that post id.)
 
-
+//api/psts/feed
+// private route, only logged in users can access this route. So we need to verify the token and get the user id from the token and then get the posts of the users that the user is following and sort them by createdAt in descending order and return the posts to the client.
+postRouter.get('/feed',identifyUser,getFeedcontroller);
 
 
 

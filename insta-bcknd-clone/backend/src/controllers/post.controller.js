@@ -4,7 +4,8 @@ const { toFile } = require("@imagekit/nodejs/index.js");
 const jwt = require("jsonwebtoken");
 const { identifyUser } = require("../middleware/auth.middileware");
 const likeModel = require("../models/like.model");
-
+const UserModel = require("../models/user.model");
+const FollowModel = require("../models/follow.model");  
 const imagekitInstance = new ImageKit({
     privateKey : process.env.IMAGEKIT_PRIVATE_KEY
 });
@@ -118,9 +119,21 @@ async function likePostController(req, res) {
     }
 }
 
+async function getFeedcontroller(req, res) {
+    const posts = await PostModel.find().populate('user')
+     
+
+    res.status(200).json({
+        message: "Feed retrieved successfully",
+        posts
+    });
+} 
+
+
 module.exports = {
     createPostController
     ,getPostController,
     getPostdeailsController,
-    likePostController
+    likePostController,
+    getFeedcontroller
 };
