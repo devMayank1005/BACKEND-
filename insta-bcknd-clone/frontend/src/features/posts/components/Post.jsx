@@ -73,24 +73,24 @@ const Post = ({ user, post,loading, handleLike, handleUnLike }) => {
 
                         <form
                     onSubmit={async (e) => {
-    e.preventDefault()
-    if (!commentText.trim()) return
+                              e.preventDefault()
+                    if (!commentText.trim()) return
 
-    const text = commentText
-    setCommentText("")
+                const text = commentText
+                setCommentText("")
+ 
+                try {
+                    const res = await addComment(post._id, text)
 
-    try {
-        const res = await addComment(post._id, text)
-
-        if (res?.comment) {
-            setComments((prev) => [res.comment, ...(prev || [])])
-            setCommentsOpen(false) // close comment box after posting
+                    if (res?.comment) {
+                setComments((prev) => [res.comment, ...(prev || [])])
+               setCommentsOpen(false) // close comment box after posting
         }
 
     } catch (err) {
         setCommentText(text)
     }
-}}
+}} 
                         >
                             <input
                                 value={commentText}
