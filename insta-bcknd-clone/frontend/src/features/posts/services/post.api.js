@@ -17,7 +17,7 @@ export async function createPost(imageFile, caption) {
 
     const formData = new FormData()
 
-    formData.append("chacha", imageFile)
+    formData.append("image", imageFile)
     formData.append('caption', caption)
 
     const response = await api.post("/api/posts", formData)
@@ -32,5 +32,15 @@ export async function likePost(postId) {
 
 export async function unLikePost(postId) {
     const response = await api.post("/api/posts/unlike/" + postId)
+    return response.data
+}
+
+export async function getComments(postId) {
+    const response = await api.get(`/api/posts/${postId}/comments`)
+    return response.data
+}
+
+export async function addComment(postId, text) {
+    const response = await api.post(`/api/posts/${postId}/comments`, { text })
     return response.data
 }

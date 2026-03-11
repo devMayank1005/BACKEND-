@@ -8,11 +8,17 @@ export const AuthProvider = ({children}) => {
 
    const handleLogin = async (username,password) => {
         const res = await login(username,password)
-        setUser(res.user)
+        if(res?.user){
+            setUser(res.user)
+        }
+        return res
     }
     const handleRegister = async (username,email,password) => {
         const res = await register(username,email,password)
-        setUser(res.user)
+        if(res?.user){
+            setUser(res.user)
+        }
+        return res
     }
     const handleLogout = async () => {
         await logout()
@@ -21,8 +27,12 @@ export const AuthProvider = ({children}) => {
 
     const getMe = async () => {
         try {
-            const res = await getMe()
-            setUser(res.user)
+            const res = await getMeApi()
+            if(res?.user){
+                setUser(res.user)
+            }else{
+                setUser(null)
+            }
         } catch (error) {
             setUser(null)
         }

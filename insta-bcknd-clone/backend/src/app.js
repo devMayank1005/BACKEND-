@@ -3,10 +3,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const userModel = require('./models/user.model');
 
- const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
-
-
 const app = express();
 
 app.use(express.json());

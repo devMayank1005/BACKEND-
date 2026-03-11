@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../styles/form.scss'
 import { Link, useNavigate } from 'react-router-dom'
-import { login } from '../../auth/services/auth.api'
+import { useAuth } from '../hooks/useAuth'
 
 const Login = () => {
 
@@ -9,13 +9,14 @@ const Login = () => {
   const [password, setPassword] = useState('')
 
   const navigate = useNavigate()
+  const { handleLogin } = useAuth()
 
   async function handleSubmit(e){
     e.preventDefault()
 
     try {
 
-      const res = await login(username, password)
+      const res = await handleLogin(username, password)
 
       if(!res) return
 

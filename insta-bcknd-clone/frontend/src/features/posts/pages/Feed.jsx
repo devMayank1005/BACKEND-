@@ -6,12 +6,21 @@ import Nav from '../../shared/components/Nav'
 
 const Feed = () => {
 
-    const { feed, loading, handleLike, handleUnLike } = usePost()
+    const { feed, loading, error, handleLike, handleUnLike } = usePost()
 
     if (loading) {
         return (
             <main>
                 <h1>Feed is loading...</h1>
+            </main>
+        )
+    }
+
+    if (error) {
+        return (
+            <main>
+                <Nav />
+                <h1>{error}</h1>
             </main>
         )
     }

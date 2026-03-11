@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom'
-import { logout } from '../../auth/services/auth.api'
+import { useAuth } from '../hooks/useAuth'
 
 const Logout = () => {
     const navigate = useNavigate()
+    const { handleLogout } = useAuth()
 
-    const handleLogout = async () => {
+    const onLogout = async () => {
         try {
-            await logout()
-            navigate('/')
+            await handleLogout()
+            navigate('/login')
         } catch (error) {
             console.error(error)
         }
@@ -15,7 +16,7 @@ const Logout = () => {
 
     return (
         <div>
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={onLogout}>Logout</button>
         </div>
     )
 }
