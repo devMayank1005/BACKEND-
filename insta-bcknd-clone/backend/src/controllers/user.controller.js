@@ -96,4 +96,57 @@ async function unfollowUserController(req, res) {
 }   
 
  
-module.exports = { followUserController, unfollowUserController };
+async function getUserProfileController(req, res) {
+  try {
+    const userId = req.userId || req.user?.userId;
+
+    if (!userId) {
+      return res.status(401).json({
+        message: "User ID not found in token"
+      });
+    }
+
+    const user = await UserModel.findById(userId)
+      .select('-password')
+      .lean();
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    // Get followers count
+    const followersCount = await FollowModel.countDocuments({
+      followee: userId
+    });
+
+    // Get following count
+    const followingCount = await FollowModel.countDocuments({
+      follower: userId
+    });
+
+    // Get posts count
+    const PostModel = require("../models/post.model");
+    const postsCount = await PostModel.countDocuments({
+      user: userId
+    });
+
+    res.status(200).json({
+      user: {
+        ...user,
+        followersCount,
+        followingCount,
+        postsCount
+      }
+    });
+
+  } catch (error) {
+    console.error('Error in getUserProfileController:', error);
+    res.status(500).json({
+      message: error.message
+    });
+  }
+}
+
+module.exports = { followUserController, unfollowUserController, getUserProfileController };

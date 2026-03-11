@@ -1,5 +1,5 @@
 import React from 'react'
-import "../shared/button.scss"
+import "./button.scss"
 
 const LoadingSpinner = ({ size = 'medium' }) => {
     const sizeClass = size === 'small' ? 'spinner-small' : size === 'large' ? 'spinner-large' : 'spinner-medium'
