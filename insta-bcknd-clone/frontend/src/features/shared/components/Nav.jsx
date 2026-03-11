@@ -11,23 +11,25 @@ const Nav = () => {
     
   return (
     <nav className='nav-bar' >
-        <p>Insta</p>
+        <a href="/" className="logo">Instagram</a>
         {user ? (
-          <div>
+          <div className="nav-buttons">
             <button
              onClick={()=>{navigate("/create-post")}}
-             className='button primary-button' >new post</button>
+            >Create</button>
             <button
               onClick={async ()=>{
                 await handleLogout()
                 navigate('/login')
               }}
-              className='button' >logout</button>
+            >Logout</button>
           </div>
         ) : (
-          <button
-            onClick={()=>{navigate('/login')}}
-            className='button primary-button' >login</button>
+          <div className="nav-buttons">
+            <button
+              onClick={()=>{navigate('/login')}}
+            >Log In</button>
+          </div>
         )}
     </nav>
   )

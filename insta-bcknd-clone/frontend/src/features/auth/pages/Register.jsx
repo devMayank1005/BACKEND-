@@ -25,36 +25,41 @@ const Register = () => {
 
   return (
     <main>
-      <div className="form-container"></div>
-      <h1>Register</h1>
+      <div className="form-container">
+        <div className="logo">Instagram</div>
+        <div className="form-title">Sign up to see photos and videos from your friends.</div>
+        
+        <form onSubmit={handleSubmit}>
+          <input 
+            value={username}
+            onChange={(e)=>setUsername(e.target.value)}
+            type='text' 
+            placeholder='Username'
+          />
 
-      <form onSubmit={handleSubmit}>
-        <input 
-          onInput={(e)=>setUsername(e.target.value)}
-          type='text' 
-          placeholder='Username'
-        />
+          <input 
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+            type='email' 
+            placeholder='Email'
+          />
 
-        <input 
-          onInput={(e)=>setEmail(e.target.value)}
-          type='email' 
-          placeholder='Email'
-        />
+          <input 
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}
+            type='password' 
+            placeholder='Password'
+          />
 
-        <input 
-          onInput={(e)=>setPassword(e.target.value)}
-          type='password' 
-          placeholder='Password'
-        />
-
-        <button type='submit'>Register</button>
-      </form>
-
-      <p>
-        Already have an account? 
-        <Link className='toggleAuthForm' to="/login">Login</Link>
-      </p>
-
+          <button type='submit' className="button">Sign up</button>
+        </form>
+      </div>
+      
+      <div className="signup-link">
+        <span>
+          Have an account? <Link to="/login">Log in</Link>
+        </span>
+      </div>
     </main>
   )
 }

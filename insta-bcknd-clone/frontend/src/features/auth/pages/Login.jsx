@@ -34,8 +34,9 @@ const Login = () => {
 
   return (
     <main>
-      <div className='container'>
-        <h1>Login</h1>
+      <div className='form-container'>
+        <div className="logo">Instagram</div>
+        <div className="form-title">Sign up to see photos and videos from your friends.</div>
 
         <form onSubmit={handleSubmit}>
 
@@ -53,17 +54,27 @@ const Login = () => {
             onChange={(e)=>setPassword(e.target.value)}
           />
 
-          <button type='submit'>Login</button>
+          <button type='submit' className="button">Log In</button>
 
         </form>
 
-        <p>
-          Don't have an account?
-          <Link className='toggleAuthForm' to="/register">
-            Register
-          </Link>
-        </p>
-
+        <div className="divider">
+          <span>OR</span>
+        </div>
+        
+        <div className="facebook-login">
+          Log in with Facebook
+        </div>
+        
+        <div className="forgot-password">
+          Forgot password?
+        </div>
+      </div>
+      
+      <div className="signup-link">
+        <span>
+          Don't have an account? <Link to="/register">Sign up</Link>
+        </span>
       </div>
     </main>
   )

@@ -11,23 +11,38 @@ const Post = ({ user, post,loading, handleLike, handleUnLike }) => {
     const [comments, setComments] = useState([])
     const [commentText, setCommentText] = useState("")
     const [commentLoading, setCommentLoading] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
+    const [likeAnimation, setLikeAnimation] = useState(false)
 
-
+    const handleLikeClick = () => {
+        if (!post.isLiked) {
+            setLikeAnimation(true)
+            setTimeout(() => setLikeAnimation(false), 600)
+        }
+        post.isLiked ? handleUnLike(post._id) : handleLike(post._id)
+    }
 
     return (
-        <div className="post">
+        <div 
+            className={`post ${isHovered ? 'post-hovered' : ''}`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <div className="user">
                 <div className="img-wrapper">
                     <img src={profileImage} alt="" />
                 </div>
                 <p>{username}</p>
             </div>
-            <img src={postImage} alt="" />
+            <div className="post-image">
+                <img src={postImage} alt="" />
+            </div>
             <div className="icons">
                 <div className="left">
                     <button
                         type="button"
-                        onClick={() => { post.isLiked ? handleUnLike(post._id) : handleLike(post._id) }}
+                        onClick={handleLikeClick}
+                        className={likeAnimation ? 'like-animation' : ''}
                     >
                         <svg
                             className={post.isLiked ? "like" : ""}
