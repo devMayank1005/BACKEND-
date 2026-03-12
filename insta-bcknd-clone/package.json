@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Instagram clone with React frontend and Node.js backend",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
+    "build": "cd frontend && npm install --include=dev && npm run build",
     "start": "NODE_ENV=production node server.js"
   },
   "engines": {
