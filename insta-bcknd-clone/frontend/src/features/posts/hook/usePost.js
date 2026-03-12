@@ -1,6 +1,6 @@
 import { getFeed, createPost, likePost, unLikePost } from "../services/post.api"
 import { useContext, useEffect, useState } from "react"
-import { PostContext } from "../Post.context"
+import { PostContext } from "../post.context"
 import { AuthContext } from "../../auth/auth.context"
 
 export const usePost = () => {
