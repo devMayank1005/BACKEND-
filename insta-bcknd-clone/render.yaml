@@ -2,10 +2,10 @@ services:
   - type: web
     name: insta-clone
     env: node
-    repo: https://github.com/yourusername/insta-bcknd-clone.git
-    rootDir: .
-    buildCommand: npm run build
-    startCommand: npm start
+    repo: https://github.com/devMayank1005/BACKEND-.git
+    rootDir: insta-bcknd-clone
+    buildCommand: cd insta-bcknd-clone/frontend && npm install && npm run build
+    startCommand: cd insta-bcknd-clone && npm start
     envVars:
       - key: NODE_ENV
         value: production
