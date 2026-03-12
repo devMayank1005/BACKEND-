@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: insta-clone
+    env: node
+    repo: https://github.com/yourusername/insta-bcknd-clone.git
+    rootDir: .
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: IMAGEKIT_PRIVATE_KEY
+        sync: false
+      - key: IMAGEKIT_PUBLIC_KEY
+        sync: false
+      - key: IMAGEKIT_URL_ENDPOINT
+        sync: false

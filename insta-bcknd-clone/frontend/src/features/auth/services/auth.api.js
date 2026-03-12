@@ -1,15 +1,24 @@
 import axios from "axios"
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api/auth',
+  baseURL: `${import.meta.env.VITE_API_URL}/api/auth`,
   withCredentials: true
 })
 
-export default api
+// For production, use relative URLs
+const productionApi = axios.create({
+  baseURL: '/api/auth',
+  withCredentials: true
+})
+
+// Use production API in production build
+const apiClient = import.meta.env.PROD ? productionApi : api
+
+export default apiClient
 
 export async function register(username,email,password) {
   try {
-    const res = await api.post('/register',{
+    const res = await apiClient.post('/register',{
       username,
       email,
       password
@@ -27,7 +36,7 @@ export async function register(username,email,password) {
 export async function login(username,password) {
 
   try {
-    const res = await api.post('/login',{
+    const res = await apiClient.post('/login',{
       username,
       password
     })
@@ -43,7 +52,7 @@ export async function login(username,password) {
 export async function logout() {
 
   try {
-    const res = await api.post('/logout')
+    const res = await apiClient.post('/logout')
 
     console.log(res.data)
     return res.data
@@ -56,7 +65,7 @@ export async function logout() {
 export async function getMe() {      
 
   try {
-    const res = await api.get('/get-me')
+    const res = await apiClient.get('/get-me')
     return res.data
   } catch (error) {
     console.log(error)
