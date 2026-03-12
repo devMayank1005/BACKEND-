@@ -27,4 +27,5 @@ export const router = createBrowserRouter([
         path: "/create-post",
         element: <CreatePost />
     }
+
 ])
