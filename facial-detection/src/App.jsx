@@ -1,9 +1,7 @@
 import FaceExpression from "./features/expression/components/FaceExpression";
 
 function App() {
-  return (
-    <FaceExpression />
-  )
+  return <FaceExpression />;
 }
 
-export default App
+export default App;
