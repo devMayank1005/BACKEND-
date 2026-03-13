@@ -1,5 +1,7 @@
 const express = require('express'); 
-const cookieParser = require('cookie-parser'); 
+const cookieParser = require('cookie-parser');
+const authController = require('./controller/auth.controller'); 
+const authRouter = require('./routes/auth.route'); 
 
 
 
@@ -10,6 +12,8 @@ app.use(cookieParser());
 
 app.use(express.json());
 
+
+app.use('/api/auth',authRouter);
 
 
 
