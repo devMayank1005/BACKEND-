@@ -1,0 +1,6 @@
+UI => UI dikhana aur navigation hanle (pages,components)
+hook => State and APIs manage karna
+
+State => data store (Context.jsxfiles)
+
+APIs => Backend sai communicate (services/filename.api.js)

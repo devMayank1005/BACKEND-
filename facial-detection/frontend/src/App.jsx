@@ -1,7 +1,13 @@
-import FaceExpression from "./features/expression/components/FaceExpression";
+import{RouterProvider} from 'react-router';
+import {router} from './app.route';
+import"./features/shared/styles/global.scss"
 
-function App() {
-  return <FaceExpression />;
-}
+function App () {
+  return (
+    <RouterProvider router={router}>
 
-export default App;
+    </RouterProvider>
+  );
+};
+
+export default App
