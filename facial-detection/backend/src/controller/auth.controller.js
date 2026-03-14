@@ -1,6 +1,8 @@
 const userModel = require('../model/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const blacklistModel = require('../model/blacklist.model');
+const redis = require('../config/cache');
 
 
 async function register(req, res) {
@@ -22,7 +24,9 @@ async function register(req, res) {
             email,
             password: hashedPassword
         }); 
-        const token = jwt.sign({id: user._id,username: user.username},
+        const token = jwt.sign({id: user._id,
+            username: user.username,
+                email:user.email},
              process.env.JWT_SECRET, {
                 expiresIn: '1d'
             });
@@ -69,7 +73,24 @@ async function login(req, res) {
     }
 }
 
-module.exports = {register, login};
+async function getMe(req, res) {
+    const user = req.user;
+    res.json({user});
+
+    
+
+    
+}
+
+async function logout(req, res) {
+  const token = req.cookies.token;
+  res.clearCookie('token');
+  redis.set(token, 'true', 'EX', 60 * 60 * 24
+    
+  );
+  res.status(200).json({ message: 'Logout successful' });
+}
+module.exports = {register, login, getMe, logout};
 
 
 
