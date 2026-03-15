@@ -76,10 +76,7 @@ async function login(req, res) {
 async function getMe(req, res) {
     const user = req.user;
     res.json({user});
-
-    
-
-    
+      
 }
 
 async function logout(req, res) {
