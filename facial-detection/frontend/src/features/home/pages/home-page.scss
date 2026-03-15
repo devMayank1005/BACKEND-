@@ -1,0 +1,137 @@
+.home-page {
+  padding-bottom: 130px;
+
+  &__status {
+    text-align: center;
+    margin: 10px auto;
+    color: #2b2f33;
+    font-weight: 500;
+
+    &--error {
+      color: #d93025;
+    }
+  }
+}
+
+.song-picker {
+  max-width: 780px;
+  margin: 18px auto;
+  padding: 0 16px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__title {
+    margin: 0;
+    font-weight: 700;
+    color: #1f2933;
+
+    span {
+      color: #6b7280;
+      font-weight: 600;
+    }
+  }
+
+  &__mood-badge {
+    text-transform: capitalize;
+    color: #9b2c00;
+    background: #fff1eb;
+    border: 1px solid #ffd2c2;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  &__list {
+    display: grid;
+    gap: 10px;
+    max-height: 280px;
+    overflow: auto;
+    padding-right: 4px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    border: 1px solid #d5dbe1;
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+      border-color: #f08e63;
+      background: #fff8f4;
+      transform: translateY(-1px);
+    }
+
+    &--active {
+      border: 2px solid #dd4200;
+      background: #fff3ed;
+      box-shadow: 0 6px 18px rgba(221, 66, 0, 0.12);
+    }
+  }
+
+  &__poster {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+
+    &--fallback {
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+    }
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  &__song-title {
+    font-size: 0.95rem;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__song-mood {
+    text-transform: capitalize;
+    font-size: 0.77rem;
+    color: #5f6368;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 700px) {
+  .song-picker {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__list {
+      max-height: 240px;
+    }
+  }
+}

@@ -2,13 +2,29 @@ const songModel = require("../model/song.model");
 const storageService = require("../services/storage.service");
 const id3 = require("node-id3");
 
+const ALLOWED_MOODS = ["happy", "sad", "surprised", "angry", "neutral"];
+const DEFAULT_SONG_LIMIT = 10;
+const MAX_SONG_LIMIT = 20;
+
+const normalizeMood = (mood) => (mood || "").toString().trim().toLowerCase();
+
+async function getSongsByMood(mood, limit) {
+    return songModel.find({ mood }).limit(limit);
+}
+
 async function uploadSong(req, res) {
     try {
         const songBuffer = req.file?.buffer;
-        const { mood } = req.body;
+        const mood = normalizeMood(req.body?.mood);
 
         if (!songBuffer) {
             return res.status(400).json({ message: "No song file uploaded" });
+        }
+
+        if (!ALLOWED_MOODS.includes(mood)) {
+            return res.status(400).json({
+                message: `Invalid mood. Allowed moods: ${ALLOWED_MOODS.join(", ")}`,
+            });
         }
 
         // Read ID3 tags
@@ -58,21 +74,45 @@ async function uploadSong(req, res) {
 
 async function getSong(req, res) {
     try {
-        const { mood } = req.query;
+        const requestedMood = normalizeMood(req.query?.mood);
+        const requestedLimit = Number.parseInt(req.query?.limit, 10);
+        const limit = Number.isFinite(requestedLimit)
+            ? Math.min(Math.max(requestedLimit, 1), MAX_SONG_LIMIT)
+            : DEFAULT_SONG_LIMIT;
 
-        if (!mood) {
+        if (!requestedMood) {
             return res.status(400).json({ message: "Mood query parameter is required" });
         }
 
-        const song = await songModel.findOne({ mood });
-
-        if (!song) {
-            return res.status(404).json({ message: "No song found for this mood" });
+        if (!ALLOWED_MOODS.includes(requestedMood)) {
+            return res.status(400).json({
+                message: `Invalid mood. Allowed moods: ${ALLOWED_MOODS.join(", ")}`,
+            });
         }
+
+        let servedMood = requestedMood;
+        let songs = await getSongsByMood(requestedMood, limit);
+
+        if (!songs.length && requestedMood !== "neutral") {
+            servedMood = "neutral";
+            songs = await getSongsByMood("neutral", limit);
+        }
+
+        if (!songs.length) {
+            return res.status(404).json({
+                message: "No song found for requested mood or neutral fallback",
+                requestedMood,
+            });
+        }
+
+        const song = songs[Math.floor(Math.random() * songs.length)];
 
         res.status(200).json({
             message: "Song fetched successfully",
+            requestedMood,
+            servedMood,
             song,
+            songs,
         });
     } catch (error) {
         console.error("GetSong error:", error);

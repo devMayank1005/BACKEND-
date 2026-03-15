@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { url } = require('node:inspector');
+
+const ALLOWED_MOODS = ['happy', 'sad', 'surprised', 'angry', 'neutral'];
 
 const songSchema = new mongoose.Schema({
 url: {
@@ -8,7 +9,7 @@ url: {
   },
 posterUrl: {
     type: String,
-    required: true
+  required: false
   },
 title: {
     type: String,
@@ -16,8 +17,8 @@ title: {
   },
  mood: {
     type: String,
-    enum: ['happy', 'sad', 'surprised'],
-    message:"enum this is"
+    enum: ALLOWED_MOODS,
+    required: true
   }
 });
 

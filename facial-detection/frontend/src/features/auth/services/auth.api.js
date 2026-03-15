@@ -9,9 +9,9 @@ const apiClient = axios.create({
 });
 
 export async function register(userData={
-    username,
-    email,
-    password,
+  username: "",
+  email: "",
+  password: "",
 }) {
   try {
     const response = await apiClient.post('/api/auth/register', userData);
@@ -22,9 +22,9 @@ export async function register(userData={
 }
 
 export async function login(credentials={
-    email,
-    password,
-    username
+  email: "",
+  password: "",
+  username: ""
 }) {
   try {
     const response = await apiClient.post('/api/auth/login', credentials);
