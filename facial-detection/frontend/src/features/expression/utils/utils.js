@@ -206,11 +206,19 @@ const resolveMood = (features, baseline) => {
 };
 
 const queueNextFrame = (params) => {
-  const { animationRef } = params;
+  const { animationRef, detectEnabledRef } = params;
+
+  if (detectEnabledRef && !detectEnabledRef.current) {
+    return;
+  }
 
   animationRef.current = requestAnimationFrame(() => {
     detect(params);
   });
+};
+
+export const resetDetectionState = (moodHistoryRef) => {
+  moodHistoryRef.current = createDetectionState();
 };
 
 export const init = async ({
@@ -218,6 +226,7 @@ export const init = async ({
   landmarkerRef,
   streamRef,
   animationRef,
+  detectEnabledRef,
   moodHistoryRef,
   setExpression
 }) => {
@@ -250,12 +259,17 @@ export const init = async ({
 
     videoRef.current.srcObject = streamRef.current;
     await videoRef.current.play();
+    if (detectEnabledRef) {
+      detectEnabledRef.current = true;
+    }
+
     moodHistoryRef.current = createDetectionState();
     setExpression("Calibrating...");
     queueNextFrame({
       videoRef,
       landmarkerRef,
       animationRef,
+      detectEnabledRef,
       moodHistoryRef,
       setExpression
     });
@@ -269,9 +283,14 @@ export const detect = ({
   videoRef,
   landmarkerRef,
   animationRef,
+  detectEnabledRef,
   moodHistoryRef,
   setExpression
 }) => {
+  if (detectEnabledRef && !detectEnabledRef.current) {
+    return;
+  }
+
   if (!landmarkerRef.current || !videoRef.current) {
     return;
   }
@@ -285,6 +304,7 @@ export const detect = ({
       videoRef,
       landmarkerRef,
       animationRef,
+      detectEnabledRef,
       moodHistoryRef,
       setExpression
     });
@@ -303,6 +323,7 @@ export const detect = ({
       videoRef,
       landmarkerRef,
       animationRef,
+      detectEnabledRef,
       moodHistoryRef,
       setExpression
     });
@@ -323,6 +344,7 @@ export const detect = ({
       videoRef,
       landmarkerRef,
       animationRef,
+      detectEnabledRef,
       moodHistoryRef,
       setExpression
     });
@@ -355,6 +377,7 @@ export const detect = ({
     videoRef,
     landmarkerRef,
     animationRef,
+    detectEnabledRef,
     moodHistoryRef,
     setExpression
   });

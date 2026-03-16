@@ -115,12 +115,19 @@ const Player = () => {
 
             {/* Poster + Info */}
             <div className="player__info">
-                <img
-                    className="player__poster"
-                    src={song.posterUrl}
-                    alt={song.title}
-                />
+                {song.posterUrl ? (
+                    <img
+                        className="player__poster"
+                        src={song.posterUrl}
+                        alt={song.title}
+                    />
+                ) : (
+                    <div className="player__poster player__poster--fallback" aria-hidden="true">
+                        {song.title?.charAt(0)?.toUpperCase() || 'S'}
+                    </div>
+                )}
                 <div className="player__meta">
+                    <span className="player__eyebrow">Now Playing</span>
                     <p className="player__title">{song.title}</p>
                     <span className="player__mood">{song.mood}</span>
                 </div>

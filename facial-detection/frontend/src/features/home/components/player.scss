@@ -3,57 +3,80 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: #1a1a1a;
-    border-top: 1px solid #333;
-    padding: 12px 24px;
+    background:
+        radial-gradient(circle at top left, rgba(255, 107, 45, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(10, 16, 26, 0.94), rgba(13, 22, 35, 0.98));
+    border-top: 1px solid rgba(147, 171, 214, 0.18);
+    padding: 14px 22px;
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
     z-index: 100;
-    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
 
     /* ── Song Info ── */
     &__info {
         display: flex;
         align-items: center;
         gap: 12px;
-        min-width: 200px;
+        min-width: 220px;
         flex: 0 0 auto;
     }
 
     &__poster {
-        width: 52px;
-        height: 52px;
-        border-radius: 8px;
+        width: 58px;
+        height: 58px;
+        border-radius: 12px;
         object-fit: cover;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(157, 183, 223, 0.28);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+
+        &--fallback {
+            display: grid;
+            place-items: center;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, #ff8a4e, #ff5d22);
+        }
     }
 
     &__meta {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 5px;
+        min-width: 0;
+    }
+
+    &__eyebrow {
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: #9cb7df;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
     }
 
     &__title {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #f1f1f1;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #f1f6ff;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 150px;
+        max-width: 180px;
     }
 
     &__mood {
         font-size: 0.72rem;
         text-transform: capitalize;
-        color: #dd4200;
-        background: rgba(221, 66, 0, 0.12);
-        padding: 2px 8px;
+        color: #fff1e7;
+        background: linear-gradient(135deg, rgba(255, 107, 45, 0.28), rgba(255, 150, 102, 0.16));
+        border: 1px solid rgba(255, 133, 74, 0.34);
+        padding: 3px 9px;
         border-radius: 20px;
         width: fit-content;
-        font-weight: 500;
+        font-weight: 700;
         letter-spacing: 0.04em;
     }
 
@@ -67,7 +90,7 @@
 
     &__time {
         font-size: 0.75rem;
-        color: #888;
+        color: #94a9cb;
         white-space: nowrap;
         font-variant-numeric: tabular-nums;
     }
@@ -75,8 +98,8 @@
     &__progress {
         position: relative;
         flex: 1;
-        height: 4px;
-        background: #3a3a3a;
+        height: 5px;
+        background: rgba(120, 142, 179, 0.28);
         border-radius: 4px;
         cursor: pointer;
         transition: height 0.15s;
@@ -93,7 +116,7 @@
 
     &__progress-fill {
         height: 100%;
-        background: #dd4200;
+        background: linear-gradient(90deg, #ff7b3e, #ffb36b);
         border-radius: 4px;
         pointer-events: none;
         transition: width 0.1s linear;
@@ -106,7 +129,8 @@
         width: 14px;
         height: 14px;
         border-radius: 50%;
-        background: #fff;
+        background: #fff8f0;
+        box-shadow: 0 0 0 4px rgba(255, 123, 62, 0.16);
         opacity: 0;
         transition: opacity 0.15s, transform 0.15s;
         pointer-events: none;
@@ -121,9 +145,9 @@
     }
 
     &__btn {
-        background: none;
-        border: none;
-        color: #ccc;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(140, 164, 202, 0.18);
+        color: #d5e3fb;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -133,23 +157,27 @@
         border-radius: 8px;
         font-size: 0.82rem;
         font-weight: 600;
-        transition: color 0.15s, background 0.15s;
+        transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.15s;
 
         &:hover {
             color: #fff;
-            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 133, 74, 0.46);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
         }
 
         &--play {
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: #dd4200;
+            background: linear-gradient(135deg, #ff7b3e, #ff5d22);
             color: #fff;
             padding: 0;
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(255, 93, 34, 0.3);
 
             &:hover {
-                background: #ff5215;
+                background: linear-gradient(135deg, #ff8a52, #ff6c38);
                 color: #fff;
             }
         }
@@ -166,21 +194,20 @@
 
         &--speed {
             min-width: 46px;
-            border: 1px solid #444;
             border-radius: 6px;
             font-size: 0.8rem;
             padding: 5px 8px;
-            color: #bbb;
+            color: #c9daf6;
 
             &:hover {
-                border-color: #dd4200;
-                color: #dd4200;
-                background: rgba(221, 66, 0, 0.08);
+                border-color: rgba(255, 133, 74, 0.46);
+                color: #ffe5d6;
+                background: rgba(255, 123, 62, 0.08);
             }
         }
 
         &--vol {
-            color: #aaa;
+            color: #b9cde9;
             padding: 6px;
         }
     }
@@ -195,8 +222,8 @@
         bottom: calc(100% + 8px);
         left: 50%;
         transform: translateX(-50%);
-        background: #2a2a2a;
-        border: 1px solid #444;
+        background: rgba(17, 27, 42, 0.96);
+        border: 1px solid rgba(142, 167, 208, 0.2);
         border-radius: 10px;
         padding: 6px;
         display: flex;
@@ -210,7 +237,7 @@
     &__speed-option {
         background: none;
         border: none;
-        color: #ccc;
+        color: #d5e3fb;
         cursor: pointer;
         padding: 6px 12px;
         border-radius: 6px;
@@ -225,8 +252,8 @@
         }
 
         &.active {
-            background: rgba(221, 66, 0, 0.18);
-            color: #dd4200;
+            background: rgba(255, 123, 62, 0.18);
+            color: #ff9a6e;
             font-weight: 700;
         }
     }
@@ -244,7 +271,7 @@
         width: 80px;
         height: 4px;
         border-radius: 4px;
-        background: #3a3a3a;
+        background: rgba(120, 142, 179, 0.28);
         outline: none;
         cursor: pointer;
 
@@ -254,7 +281,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: #dd4200;
+            background: #ff7b3e;
             cursor: pointer;
             transition: transform 0.15s;
 
@@ -267,7 +294,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: #dd4200;
+            background: #ff7b3e;
             cursor: pointer;
             border: none;
         }
