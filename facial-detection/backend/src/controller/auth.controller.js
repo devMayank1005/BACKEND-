@@ -1,8 +1,15 @@
 const userModel = require('../model/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const blacklistModel = require('../model/blacklist.model');
 const redis = require('../config/cache');
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+const cookieOptions = {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+};
 
 
 async function register(req, res) {
@@ -61,7 +68,10 @@ async function login(req, res) {
             {
                 expiresIn: '1h'
             });
-            res.cookie('token', token);
+            res.cookie('token', token, {
+                ...cookieOptions,
+                maxAge: 1000 * 60 * 60,
+            });
         res.json({
             message: 'Login successful',
             user: {id: user._id, 
@@ -81,10 +91,12 @@ async function getMe(req, res) {
 
 async function logout(req, res) {
   const token = req.cookies.token;
-  res.clearCookie('token');
-  redis.set(token, 'true', 'EX', 60 * 60 * 24
-    
-  );
+    res.clearCookie('token', cookieOptions);
+
+    if (token) {
+        redis.set(token, 'true', 'EX', 60 * 60 * 24);
+    }
+
   res.status(200).json({ message: 'Logout successful' });
 }
 module.exports = {register, login, getMe, logout};

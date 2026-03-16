@@ -1,20 +1,16 @@
 const express = require('express'); 
 const cookieParser = require('cookie-parser');
-const authController = require('./controller/auth.controller'); 
-
 const cors = require('cors');
 
+const app = express();
+const frontendOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
 
-
-
-const userModel = require('./model/user.model');
- const app = express();
 app.use(cookieParser());
 
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173', // Frontend URL
+    origin: frontendOrigin,
     credentials: true, // Allow cookies to be sent
 }));
 
