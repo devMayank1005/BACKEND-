@@ -1,0 +1,9 @@
+authentication
+
+
+authorization
+
+validation => validating user data or input
+
+
+verification
