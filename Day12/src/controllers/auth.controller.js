@@ -1,3 +1,9 @@
-export async function registerUser(req, res) {
-    throw new Error("encountered an error while registering the user");
+export async function registerUser(req, res, next) {
+
+    try {
+    console.log(user);
+    } catch (err) {
+        err.status = 500;
+        next(err);
+    }
 }   
