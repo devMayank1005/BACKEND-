@@ -1,0 +1,6 @@
+io => server
+socket => single user
+socket.io event driven
+
+on => event ko listen
+emit => event ko fire karna
