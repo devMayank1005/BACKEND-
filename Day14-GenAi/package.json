@@ -1,0 +1,21 @@
+{
+  "name": "day14-genai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@langchain/mistralai": "^1.0.7",
+    "dotenv": "^17.3.1",
+    "langchain": "^1.2.35",
+    "nodemailer": "^8.0.3",
+    "readline-sync": "^1.4.10"
+  }
+}
